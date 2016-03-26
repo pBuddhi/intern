@@ -41,7 +41,8 @@ def require(request):
 
 def database(request):
     if request.method == 'POST':
-        mehman = DatabaseInsert.objects.latest('id')
+        mehman_username = request.POST.get('guestname','')
+        mehman = DatabaseInsert.objects.get(username=mehman_username)
         query = request.POST.get('query','')
         requirement_obj = Requirement(mehman=mehman,query=query)
         requirement_obj.save()
