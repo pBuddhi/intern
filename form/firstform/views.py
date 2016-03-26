@@ -34,9 +34,9 @@ def require(request):
         database_obj = DatabaseInsert(username=username,phone=phone)
         database_obj.save()
         
-        return render(request,'firstform/require.html',{'guestvalue':username})
+        return render(request,'firstform/newrequire.html',{'guestlist':DatabaseInsert.objects.all()})
     else:
-        return render(request,'firstform/require.html')
+        return render(request,'firstform/newrequire.html',{'guestlist':DatabaseInsert.objects.all()})
 
 
 def database(request):
