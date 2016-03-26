@@ -33,10 +33,13 @@ def require(request):
         phone = request.POST.get('phone',False)
         database_obj = DatabaseInsert(username=username,phone=phone)
         database_obj.save()
-        
-        return render(request,'firstform/newrequire.html',{'guestlist':DatabaseInsert.objects.all()})
+        guestlist = DatabaseInsert.objects.all()
+        guestlist = guestlist[::-1]
+        return render(request,'firstform/newrequire.html',{'guestlist':guestlist})
     else:
-        return render(request,'firstform/newrequire.html',{'guestlist':DatabaseInsert.objects.all()})
+        guestlist = DatabaseInsert.objects.all()
+        guestlist = guestlist[::-1]
+        return render(request,'firstform/newrequire.html',{'guestlist':guestlist})
 
 
 def database(request):
