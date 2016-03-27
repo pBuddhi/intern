@@ -1,28 +1,34 @@
 <html>
-	<head> 
-		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <head> 
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
    <script>
   // $('#enter_button').click(function(){
-  // 	$('#username').val($('#name').val());
+  //  $('#username').val($('#name').val());
   // });
   // </script>
  
-	</head>
+  </head>
 <body>
-	<form action='database' method='POST'>
-		<!-- {% csrf_token %} -->
-		{% csrf_token %}
-		Guest: <input type='text' name = 'user' id='username' value={{ guestvalue }}> 
-		<button type="button" data-toggle="modal" data-target="#myModal">Add Guest</button></br>
+  <form action='database' method='POST'>
+    <!-- {% csrf_token %} -->
+    {% csrf_token %}
+    Guest: 
+    <select name='guestname'>
+      <option value='------'>------</option>
+      {% for guest in guestlist %}
+            <option value={{guest.username}}> {{guest.username }}</option>
+      {% endfor %}
+    </select> 
+    <button type="button" data-toggle="modal" data-target="#myModal">Add Guest</button></br>
 
-		 </br>
+     </br>
 
-		Requirement : <input type='text' name = 'query' id='userquery'>
-		
-		<button type='submit' name = 'submit' id='submit_button'>Save</button>
-	</form>
+    Requirement : <input type='text' name = 'query' id='userquery'>
+    
+    <button type='submit' name = 'submit' id='submit_button'>Save</button>
+  </form>
 
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -35,12 +41,12 @@
         </div>
       <div class="modal-body">
 
-      	<form method='POST'>
-			{% csrf_token %}
-		username :<input type='text' name='username' id='name'>
-		phone_number : <input type='text' name='phone'>
-		<button type='submit' name = 'enter' id='enter_button'>enter</button>
-		</form>
+        <form method='POST'>
+      {% csrf_token %}
+    username :<input type='text' name='username' id='name'>
+    phone_number : <input type='text' name='phone'>
+    <button type='submit' name = 'enter' id='enter_button'>enter</button>
+    </form>
 
 
           
@@ -57,9 +63,9 @@
 
 
 
-	
+  
 
 
   
-</body>	
+</body> 
 </html>

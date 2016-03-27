@@ -39,7 +39,7 @@ def require(request):
     else:
         guestlist = DatabaseInsert.objects.all()
         guestlist = guestlist[::-1]
-        return render(request,'firstform/newrequire.html',{'guestlist':guestlist})
+        return render(request,'firstform/require.html',{'guestlist':guestlist})
 
 
 def database(request):
