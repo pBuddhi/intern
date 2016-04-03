@@ -3,20 +3,15 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-   <script>
-  // $('#enter_button').click(function(){
-  //  $('#username').val($('#name').val());
-  // });
-  // </script>
- 
+
   </head>
 <body>
   <form action='database' method='POST'>
     <!-- {% csrf_token %} -->
     {% csrf_token %}
     Guest: 
-    <select name='guestname'>
-      <option value='------'>------</option>
+    <select name='guestname' id="select">
+      <div id="html_change"><option id="option_id" value='------'>------</option></div>
       {% for guest in guestlist %}
             <option value={{guest.username}}> {{guest.username }}</option>
       {% endfor %}
@@ -41,11 +36,11 @@
         </div>
       <div class="modal-body">
 
-        <form method='POST'>
-      {% csrf_token %}
+        <form method='POST' id="dataform"> 
+                  {% csrf_token %}
     username :<input type='text' name='username' id='name'>
-    phone_number : <input type='text' name='phone'>
-    <button type='submit' name = 'enter' id='enter_button'>enter</button>
+    phone_number : <input type='text' name='phone' id='phone'>
+    <input type="submit" name = 'enter' id='enter_button' value="enter"  >
     </form>
 
 
@@ -58,14 +53,35 @@
     </div>
   </div>
 
+ <script>
+$(document).ready(function(){
 
+$('#dataform').submit(function(event){
+      event.preventDefault();
+      //console.log("deafual gone") just for testing
+      funk();
+});
+function funk(){
+  //console.log("ajaxcalling") just for testing
+  $.ajax(
+  {
 
-
-
-
+    url : "datastore",
+    type : "POST",
+    data : { username:$('#name').val(),phone_number:$('#phone').val(),csrfmiddlewaretoken: '{{ csrf_token }}'},
+    success: function(json){
+      //console.log(json['username']); just for testing
+      $("#myModal").modal('hide');
+      $('#option_id').val(json['username']);
+      $('#option_id').html(json['username']);
+    }
   
+  });
+};
 
+});
+</script>  
+ 
 
-  
 </body> 
 </html>

@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .forms import GuestForm
@@ -28,18 +29,9 @@ def enquiry(request):
         return render(request,'firstform/enquiry.html',{'form':form})
 
 def require(request):
-    if request.method == 'POST':
-        username = request.POST.get('username',False)
-        phone = request.POST.get('phone',False)
-        database_obj = DatabaseInsert(username=username,phone=phone)
-        database_obj.save()
-        guestlist = DatabaseInsert.objects.all()
-        guestlist = guestlist[::-1]
-        return render(request,'firstform/newrequire.html',{'guestlist':guestlist})
-    else:
-        guestlist = DatabaseInsert.objects.all()
-        guestlist = guestlist[::-1]
-        return render(request,'firstform/require.html',{'guestlist':guestlist})
+    guestlist = DatabaseInsert.objects.all()
+    guestlist = guestlist[::-1]
+    return render(request,'firstform/require.html',{'guestlist':guestlist})
 
 
 def database(request):
@@ -50,6 +42,16 @@ def database(request):
         requirement_obj = Requirement(mehman=mehman,query=query)
         requirement_obj.save()
         return redirect('requirement')
-        
+
+def datastore(request):
+    if request.method == 'POST':
+        user = request.POST.get('username','')
+        phone = request.POST.get('phone_number','')
+        database_obj = DatabaseInsert(username=user,phone=phone)
+        database_obj.save()
+        return HttpResponse(
+            json.dumps({"username":user,"phone_number":phone}),
+            content_type="application/json"
+        )
     
 # Create your views here.

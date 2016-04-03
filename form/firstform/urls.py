@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^requirement',views.require,name='require'),
     url(r'^newenq',views.require,name='requirement'),
     url(r'^database',views.database,name='database'),
+    url(r'^datastore',views.datastore,name='datastore'),
     ]
